@@ -6,3 +6,7 @@ statts_host_os_info:
     path: /v0/system
     defaults: { _controller: StattsCommonBundle:System:index }
     methods: GET
+statts_application_info:
+    path: /v0/appinfo/{appname}
+    defaults: { _controller: StattsCommonBundle:ApplicationInfo:index }
+    methods: GET
