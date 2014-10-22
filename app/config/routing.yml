@@ -1,0 +1,4 @@
+statts_common:
+    resource: "@StattsCommonBundle/Resources/config/routing.yml"
+    prefix:   /
+
