@@ -1,4 +1,6 @@
 services:
+    statts_system_fact:
+        class: Statts\Bundle\CommonBundle\Services\StattsSystemFacts
 #    statts_common.example:
 #        class: Statts\Bundle\CommonBundle\Example
 #        arguments: [@service_id, "plain_value", %parameter%]

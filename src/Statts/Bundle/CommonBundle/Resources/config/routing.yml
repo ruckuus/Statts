@@ -1,3 +1,8 @@
 statts_common_homepage:
     path:     /hello/{name}
     defaults: { _controller: StattsCommonBundle:Default:index }
+
+statts_host_os_info:
+    path: /v0/system
+    defaults: { _controller: StattsCommonBundle:System:index }
+    methods: GET
