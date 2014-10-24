@@ -10,3 +10,11 @@ statts_application_info:
     path: /v0/appinfo/{appname}
     defaults: { _controller: StattsCommonBundle:ApplicationInfo:index }
     methods: GET
+statts_push_endpoint:
+    path: /v0/push
+    defaults: { _controller: StattsCommonBundle:Statts:push }
+    methods: POST
+statts_pull_endpoint:
+    path: /v0/pull/{key}
+    defaults: { _controller: StattsCommonBundle:Statts:pull }
+    methods: GET

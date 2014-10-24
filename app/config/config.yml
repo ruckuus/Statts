@@ -71,3 +71,15 @@ swiftmailer:
     password:  "%mailer_password%"
     spool:     { type: memory }
 nelmio_api_doc: ~
+
+# AequasiCacheBundle configuration
+aequasi_cache:
+    instances:
+        redis:
+            persistent: true
+            type: redis
+            hosts:
+                -
+                    host: '192.168.1.11'
+                    port: 6379
+
