@@ -1,0 +1,21 @@
+Statts\Bundle\CommonBundle\Entity\Entries:
+    type: entity
+    table: null
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        createdAt:
+            type: datetime
+            column: created_at
+        entryName:
+            type: string
+            length: 255
+            column: entry_name
+        entryValue:
+            type: text
+            column: entry_value
+    lifecycleCallbacks: {  }

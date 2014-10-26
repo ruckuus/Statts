@@ -2,6 +2,7 @@
 
 namespace Statts\Bundle\CommonBundle\Controller;
 
+use Statts\Bundle\CommonBundle\Entity\Entries;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -22,11 +23,30 @@ class StattsController extends Controller
      public function pushAction(Request $request)
      {
        $data = $request->request->all();
+       $em = $this->getDoctrine()->getManager();
+       $repository = $this->getDoctrine()->getRepository('StattsCommonBundle:Entries');
+       $entry = new Entries();
+
        foreach($data as $key => $value) {
-        $this->get('aequasi_cache.redis')->save($key, $value);
+         $status = 200;
+         $this->get('aequasi_cache.redis')->save($key, $value);
+         /* Try to findByEntryName */
+         $oldEntry = $repository->findOneByEntryName($key);
+
+         if (!$oldEntry) {
+            /* Create a new record */
+            $entry->setCreatedAt(new \DateTime(date('Y-m-d H:i:s')));
+            $entry->setEntryName($key);
+            $entry->setEntryValue($value);
+            $em->persist($entry);
+          } else {
+            $oldEntry->setEntryValue($value);
+          }
+
+          $em->flush();
        }
 
-       return new JsonResponse(array( "data" => $data ));
+       return new JsonResponse(array( "data" => $data ), $status);
      }
 
     /**
@@ -40,7 +60,15 @@ class StattsController extends Controller
      {
         $data = $this->get('aequasi_cache.redis')->fetch($key);
 
-        return new JsonResponse(array($key => $data));
+        $repository = $this->getDoctrine()->getRepository('StattsCommonBundle:Entries');
+
+        $dataFromDb = $repository->findOneByEntryName($key);
+
+        $data = array(
+          $dataFromDb->getEntryName() => $dataFromDb->getEntryValue()
+        );
+
+        return new JsonResponse($data);
      }
 
 }
