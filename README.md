@@ -30,6 +30,16 @@ $ curl -XGET http://dev.statts.co/v0/pull/mysecret
     "content": "my super secret message"
   }
 }
+
+$ curl -XGET http://dev.statts.co/v0/pull/auth-service
+
+{
+  "auth-service": {
+    "status": "OK",
+    "version": "456",
+    "revision": "09d22d8cce0d81c23923845db5a6a377f7f5ebfc"
+  }
+}
 ```
 ## License
 MIT
