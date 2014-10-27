@@ -33,6 +33,10 @@ class StattsController extends Controller
          /* Try to findByEntryName */
          $oldEntry = $repository->findOneByEntryName($key);
 
+         if (is_array($value)) {
+          $value = json_encode($value);
+         }
+
          if (!$oldEntry) {
             /* Create a new record */
             $entry->setCreatedAt(new \DateTime(date('Y-m-d H:i:s')));
@@ -64,8 +68,11 @@ class StattsController extends Controller
 
         $dataFromDb = $repository->findOneByEntryName($key);
 
+        $key = $dataFromDb->getEntryName();
+        $value = (null === ($tmp = json_decode($dataFromDb->getEntryValue()))) ? $dataFromDb->getEntryValue() : $tmp;
+
         $data = array(
-          $dataFromDb->getEntryName() => $dataFromDb->getEntryValue()
+          $key => $value
         );
 
         return new JsonResponse($data);
