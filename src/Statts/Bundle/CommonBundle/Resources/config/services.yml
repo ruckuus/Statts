@@ -1,6 +1,6 @@
 services:
     statts_system_fact:
         class: Statts\Bundle\CommonBundle\Services\StattsSystemFacts
-#    statts_common.example:
-#        class: Statts\Bundle\CommonBundle\Example
-#        arguments: [@service_id, "plain_value", %parameter%]
+    statts_data_service:
+        class: Statts\Bundle\CommonBundle\Services\StattsDataService
+        arguments: [@doctrine, @aequasi_cache.redis]

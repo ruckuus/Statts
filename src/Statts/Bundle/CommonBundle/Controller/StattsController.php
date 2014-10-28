@@ -2,7 +2,6 @@
 
 namespace Statts\Bundle\CommonBundle\Controller;
 
-use Statts\Bundle\CommonBundle\Entity\Entries;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -23,34 +22,8 @@ class StattsController extends Controller
      public function pushAction(Request $request)
      {
        $data = $request->request->all();
-       $em = $this->getDoctrine()->getManager();
-       $repository = $this->getDoctrine()->getRepository('StattsCommonBundle:Entries');
-       $entry = new Entries();
-
-       foreach($data as $key => $value) {
-         $status = 200;
-         $this->get('aequasi_cache.redis')->save($key, $value);
-         /* Try to findByEntryName */
-         $oldEntry = $repository->findOneByEntryName($key);
-
-         if (is_array($value)) {
-          $value = json_encode($value);
-         }
-
-         if (!$oldEntry) {
-            /* Create a new record */
-            $entry->setCreatedAt(new \DateTime(date('Y-m-d H:i:s')));
-            $entry->setEntryName($key);
-            $entry->setEntryValue($value);
-            $em->persist($entry);
-          } else {
-            $oldEntry->setEntryValue($value);
-          }
-
-          $em->flush();
-       }
-
-       return new JsonResponse(array( "data" => $data ), $status);
+       $status = ((true === $this->get('statts_data_service')->save($data)) ? "OK" : "NOK");
+       return new JsonResponse(array( "status" => $status ));
      }
 
     /**
@@ -62,20 +35,7 @@ class StattsController extends Controller
      */
      public function pullAction($key)
      {
-        $data = $this->get('aequasi_cache.redis')->fetch($key);
-
-        $repository = $this->getDoctrine()->getRepository('StattsCommonBundle:Entries');
-
-        $dataFromDb = $repository->findOneByEntryName($key);
-
-        $key = $dataFromDb->getEntryName();
-        $value = (null === ($tmp = json_decode($dataFromDb->getEntryValue()))) ? $dataFromDb->getEntryValue() : $tmp;
-
-        $data = array(
-          $key => $value
-        );
-
-        return new JsonResponse($data);
+        return new JsonResponse($this->get('statts_data_service')->fetch($key));
      }
 
 }
