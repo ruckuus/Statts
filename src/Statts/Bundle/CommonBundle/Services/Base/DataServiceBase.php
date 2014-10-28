@@ -7,6 +7,10 @@ class DataServiceBase
   private $doctrine;
   private $cache;
 
+  /**
+   * @params doctrine instance
+   * @params cache instance
+   */
   public function __construct($doctrine, $cache) {
     $this->doctrine = $doctrine;
     $this->cache = $cache;
