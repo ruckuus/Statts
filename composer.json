@@ -20,7 +20,8 @@
         "incenteev/composer-parameter-handler": "~2.0",
         "nelmio/api-doc-bundle": "dev-master",
         "aequasi/cache-bundle": "dev-master",
-        "jms/serializer-bundle": "dev-master"
+        "jms/serializer-bundle": "dev-master",
+        "friendsofsymfony/oauth-server-bundle": "dev-master"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"
