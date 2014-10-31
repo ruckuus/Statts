@@ -19,6 +19,7 @@ class AppKernel extends Kernel
             new Nelmio\ApiDocBundle\NelmioApiDocBundle(),
             new JMS\SerializerBundle\JMSSerializerBundle(),
             new Aequasi\Bundle\CacheBundle\AequasiCacheBundle(),
+            new FOS\OAuthServerBundle\FOSOAuthServerBundle(),
             new Statts\Bundle\CommonBundle\StattsCommonBundle(),
         );
 
