@@ -83,3 +83,9 @@ aequasi_cache:
                     host: "%redis_host%"
                     port: "%redis_port%"
 
+fos_oauth_server:
+    db_driver:  orm     # Driver availables: orm, mongodb, or propel
+    client_class:        Statts\Bundle\CommonBundle\Entity\Client
+    access_token_class:  Statts\Bundle\CommonBundle\Entity\AccessToken
+    refresh_token_class: Statts\Bundle\CommonBundle\Entity\RefreshToken
+    auth_code_class:     Statts\Bundle\CommonBundle\Entity\AuthCode
